@@ -1,6 +1,6 @@
 {
   "name": "dsh-browser-use-bundle",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Installs the browser-use provider pair for the DSH desktop Sidebar: the exclusive browser-use service plus the Chrome DevTools MCP provider that attaches to the loopback CDP endpoint the desktop shell publishes for Sidebar guests.",
   "private": false,
   "type": "module",
@@ -14,9 +14,6 @@
   "engines": {
     "node": ">=20",
     "dsh": ">=0.2.0-rc.1 <0.3.0-0"
-  },
-  "scripts": {
-    "prepare": "node ./scripts/fetch-vendor.mjs"
   },
   "dsh": {
     "bundle": {
@@ -33,9 +30,9 @@
     }
   },
   "dependencies": {
-    "@deepseek-ai/dsh-browser-use": "file:./vendor/browser-use",
-    "@deepseek-ai/dsh-experimental-browser-use-runtime": "file:./vendor/browser-use-runtime",
-    "@deepseek-ai/dsh-experimental-browser-use-chrome-devtools-mcp": "file:./vendor/browser-use-chrome-devtools-mcp"
+    "@deepseek-ai/dsh-browser-use": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-experimental-browser-use-runtime": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-experimental-browser-use-chrome-devtools-mcp": "0.2.0-rc.2"
   },
   "files": [
     "lib/index.js",

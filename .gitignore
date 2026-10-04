@@ -1,18 +1,19 @@
 # Dependencies
 node_modules/
 
-# The three provider packages under vendor/ are DeepSeek's own published npm packages. They are NOT
-# committed here (committing them would re-distribute somebody else's package). They are fetched at
-# install time by `scripts/fetch-vendor.mjs`, which runs from the `prepare` lifecycle script — the
-# only lifecycle hook npm/pnpm execute for a git dependency.
+# NOTE: this package used to vendor three pinned @deepseek-ai provider packages under vendor/ and
+# depend on them through `file:./vendor/<dir>`. That is gone, for two independent reasons:
 #
-# Note the shape of these rules: an ignore pattern with no negation is fine here (unlike the
-# packages/bundle case in some sibling repos) because pnpm building the git-dependency file list from
-# .gitignore is exactly what we WANT — the vendor content has no business being inside the packed
-# tarball. `prepare` reconstructs it after unpacking.
-vendor/browser-use/
-vendor/browser-use-runtime/
-vendor/browser-use-chrome-devtools-mcp/
+#  1. Committing them here would re-distribute DeepSeek's own published npm packages.
+#  2. A `prepare` script that fetched them from npm could not work anyway: pnpm resolves a git
+#     dependency's own `file:` dependencies BEFORE running `prepare`, so the vendored directories do
+#     not exist yet when they are needed (`ERR_PNPM_LINKED_PKG_DIR_NOT_FOUND`). Measured, not assumed.
+#
+# The three providers are published on npm as @deepseek-ai/dsh-browser-use,
+# @deepseek-ai/dsh-experimental-browser-use-runtime and
+# @deepseek-ai/dsh-experimental-browser-use-chrome-devtools-mcp, and package.json now depends on the
+# published versions directly.
+vendor/
 
 # Package artifacts
 *.tgz
