@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# The three provider packages under vendor/ are DeepSeek's own published npm packages. They are NOT
+# committed here (committing them would re-distribute somebody else's package). They are fetched at
+# install time by `scripts/fetch-vendor.mjs`, which runs from the `prepare` lifecycle script — the
+# only lifecycle hook npm/pnpm execute for a git dependency.
+#
+# Note the shape of these rules: an ignore pattern with no negation is fine here (unlike the
+# packages/bundle case in some sibling repos) because pnpm building the git-dependency file list from
+# .gitignore is exactly what we WANT — the vendor content has no business being inside the packed
+# tarball. `prepare` reconstructs it after unpacking.
+vendor/browser-use/
+vendor/browser-use-runtime/
+vendor/browser-use-chrome-devtools-mcp/
+
+# Package artifacts
+*.tgz
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~

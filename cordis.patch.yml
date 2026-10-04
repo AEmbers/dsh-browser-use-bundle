@@ -1,0 +1,25 @@
+# dsh-browser-use bundle patch.
+#
+# Install with the official CLI —
+#
+#   dsh plugin --profile <name> add <path-or-git-url-of-this-package>
+#
+# — which appends this package to `dsh.profile.bundles`; the profile boot merges
+# this patch, inserting the two rows that make the agent able to drive the
+# Sidebar's browser guest.
+#
+# Both rows stay dormant until the desktop shell publishes its loopback CDP
+# endpoint, which it does only when DSH_DESKTOP_CDP_PORT is set — so a plain
+# install with no endpoint configured changes nothing. The shared browser-use
+# service admits exactly one provider, which is why the pair moves together.
+- insert:
+    - id: browser-use
+      name: '@deepseek-ai/dsh-browser-use'
+      disabled: !!js "process.env.DSH_DESKTOP_CDP_PORT === undefined || process.env.DSH_DESKTOP_CDP_PORT === ''"
+
+    - id: browser-use-chrome-devtools-mcp
+      name: '@deepseek-ai/dsh-experimental-browser-use-chrome-devtools-mcp'
+      disabled: !!js "process.env.DSH_DESKTOP_CDP_PORT === undefined || process.env.DSH_DESKTOP_CDP_PORT === ''"
+      config:
+        mode: attach
+        endpoint: !!js "`http://127.0.0.1:${process.env.DSH_DESKTOP_CDP_PORT}`"

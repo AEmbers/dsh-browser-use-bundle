@@ -1,0 +1,47 @@
+{
+  "name": "dsh-browser-use-bundle",
+  "version": "0.1.1",
+  "description": "Installs the browser-use provider pair for the DSH desktop Sidebar: the exclusive browser-use service plus the Chrome DevTools MCP provider that attaches to the loopback CDP endpoint the desktop shell publishes for Sidebar guests.",
+  "private": false,
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "engines": {
+    "node": ">=20",
+    "dsh": ">=0.2.0-rc.1 <0.3.0-0"
+  },
+  "scripts": {
+    "prepare": "node ./scripts/fetch-vendor.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "manifestVersion": 1,
+    "compatibility": {
+      "dsh": ">=0.2.0-rc.1 <0.3.0-0",
+      "dshReleases": {
+        "0.2.0-rc.1": "compatible",
+        "0.2.0-rc.2": "compatible",
+        "0.2.1-alpha.1": "compatible"
+      }
+    }
+  },
+  "dependencies": {
+    "@deepseek-ai/dsh-browser-use": "file:./vendor/browser-use",
+    "@deepseek-ai/dsh-experimental-browser-use-runtime": "file:./vendor/browser-use-runtime",
+    "@deepseek-ai/dsh-experimental-browser-use-chrome-devtools-mcp": "file:./vendor/browser-use-chrome-devtools-mcp"
+  },
+  "files": [
+    "lib/index.js",
+    "vendor",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "license": "MIT"
+}
